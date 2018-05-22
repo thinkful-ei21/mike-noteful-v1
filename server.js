@@ -11,7 +11,6 @@ const express = require('express');
 
 const app = express();
 
-
 // ADD STATIC SERVER HERE
 app.use(express.static('public'));
 
@@ -22,8 +21,13 @@ app.listen(8080, function () {
 });
 
 
-app.get('/api/notes', (req, res) => {
-  res.json(data);
+app.get('/api/notes/:searchTerm', (req, res) => {
+  // retrieve the searchTerm from the query-string on the req.query object.
+  const searchTerm = req.query.searchTerm;
+  // search the array to find the proper results
+  const itemFound = data.filter(itm => itm.title.includes(searchTerm));
+  // return the filtered list
+  res.json(itemFound);
 });
 
 
