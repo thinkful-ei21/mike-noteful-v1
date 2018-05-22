@@ -36,19 +36,20 @@ app.get('/api/notes/', (req, res) => {
     res.json(list); // responds with filtered array
   });
 
-  // if(searchTerm) {
-  //   // search the array to find the proper results
-  //   const itemFound = data.filter(itm => itm.title.includes(searchTerm));
-  //   res.json(itemFound);
-  // } else {
-  //   // return the unfiltered list
-  //   res.json(data);}
 });
 
 
-app.get('/api/notes/:id', (req, res) => {
-  const foundItem = data.find(item => item.id === Number(req.params.id));
-  res.json(foundItem);
+app.get('/api/notes/:id', (req, res, next) => {
+
+  const foundItem = req.params.id;
+
+  notes.find(foundItem, (err, list) => {
+    if (err) {
+      return next(err); // goes to error handler
+    }
+    res.json(list); // responds with filtered array
+  });
+
 });
 
 
