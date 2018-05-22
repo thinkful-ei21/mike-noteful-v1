@@ -13,8 +13,12 @@ const app = express();
 
 const { PORT } = require('./config');
 
+const { logger } = require('./middleware/logger');
+
 // ADD STATIC SERVER HERE
 app.use(express.static('public'));
+
+app.use(logger);
 
 app.listen(PORT, function () {
   console.info(`Server listening on ${this.address().port}`);
@@ -42,3 +46,4 @@ app.get('/api/notes/:id', (req, res) => {
   const foundItem = data.find(item => item.id === Number(req.params.id));
   res.json(foundItem);
 });
+
