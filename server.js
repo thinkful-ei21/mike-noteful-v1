@@ -29,13 +29,20 @@ app.get('/api/notes/', (req, res) => {
   // retrieve the searchTerm from the query-string on the req.query object.
   const searchTerm = req.query.searchTerm;
 
-  if(searchTerm) {
-    // search the array to find the proper results
-    const itemFound = data.filter(itm => itm.title.includes(searchTerm));
-    res.json(itemFound);
-  } else {
-    // return the unfiltered list
-    res.json(data);}
+  notes.filter(searchTerm, (err, list) => {
+    if (err) {
+      return next(err); // goes to error handler
+    }
+    res.json(list); // responds with filtered array
+  });
+
+  // if(searchTerm) {
+  //   // search the array to find the proper results
+  //   const itemFound = data.filter(itm => itm.title.includes(searchTerm));
+  //   res.json(itemFound);
+  // } else {
+  //   // return the unfiltered list
+  //   res.json(data);}
 });
 
 
