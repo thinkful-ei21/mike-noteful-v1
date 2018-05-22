@@ -11,10 +11,12 @@ const express = require('express');
 
 const app = express();
 
+const { PORT } = require('./config');
+
 // ADD STATIC SERVER HERE
 app.use(express.static('public'));
 
-app.listen(8080, function () {
+app.listen(PORT, function () {
   console.info(`Server listening on ${this.address().port}`);
 }).on('error', err => {
   console.error(err);
