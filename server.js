@@ -25,6 +25,7 @@ app.get('/api/notes/', (req, res) => {
 
   // retrieve the searchTerm from the query-string on the req.query object.
   const searchTerm = req.query.searchTerm;
+
   if(searchTerm) {
     // search the array to find the proper results
     const itemFound = data.filter(itm => itm.title.includes(searchTerm));
@@ -36,6 +37,6 @@ app.get('/api/notes/', (req, res) => {
 
 
 app.get('/api/notes/:id', (req, res) => {
-  const foundItem = data.find(item => item.id == req.params.id);
+  const foundItem = data.find(item => item.id === Number(req.params.id));
   res.json(foundItem);
 });
