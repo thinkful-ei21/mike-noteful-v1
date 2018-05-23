@@ -13,7 +13,7 @@ const simDB = require('../db/simDB');
 const notes = simDB.initialize(data);
 
 
-router.get('/api/notes/', (req, res) => {
+router.get('/notes/', (req, res) => {
 
   // retrieve the searchTerm from the query-string on the req.query object.
   const searchTerm = req.query.searchTerm;
@@ -28,7 +28,7 @@ router.get('/api/notes/', (req, res) => {
 });
 
 
-router.put('/api/notes/:id', (req, res, next) => {
+router.put('/notes/:id', (req, res, next) => {
   const id = req.params.id;
 
   /***** Never trust users - validate input *****/
@@ -60,7 +60,7 @@ router.put('/api/notes/:id', (req, res, next) => {
 });
 
 
-router.get('/api/notes/:id', (req, res, next) => {
+router.get('/notes/:id', (req, res, next) => {
 
   const foundItem = req.params.id;
 
@@ -72,7 +72,6 @@ router.get('/api/notes/:id', (req, res, next) => {
   });
 
 });
-
 
 
 module.exports = router;

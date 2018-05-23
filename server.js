@@ -15,7 +15,7 @@ app.use(logger('common'));
 app.use(express.static('public'));
 
 // use notes router
-app.use(notesRouter);
+app.use('/api', notesRouter);
 
 // Catch-all 404
 app.use(function (req, res, next) {
