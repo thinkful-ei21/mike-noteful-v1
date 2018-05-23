@@ -5,7 +5,7 @@ const data = require('./db/notes');// Simple In-Memory Database
 const simDB = require('./db/simDB'); 
 const notes = simDB.initialize(data);
 
-const { logger } = require('./middleware/logger');
+const logger = require('morgan');
 const { PORT } = require('./config');
 
 const express = require('express');
@@ -13,8 +13,9 @@ const express = require('express');
 // Create an Express application
 const app = express();
 
+
 // Log all requests
-app.use(logger);
+app.use(logger('common'));
 
 // Create a static webserver
 app.use(express.static('public'));
