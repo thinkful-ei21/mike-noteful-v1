@@ -59,7 +59,7 @@ router.put('/notes/:id', (req, res, next) => {
   });
 });
 
-// get item by id
+// get note by id
 router.get('/notes/:id', (req, res, next) => {
 
   const foundItem = req.params.id;
@@ -73,8 +73,24 @@ router.get('/notes/:id', (req, res, next) => {
 
 });
 
+// delete a note
+router.delete('/notes/:id', (req, res, next) => {
+  const noteId = req.params.id;
+  const message = 'No Content';
+  notes.delete(noteId, (err, item) => {
+    if (item === null) {
+      res.status(404).end();
+    } else {
+      res.status(204).send(message).end();
+    }
+    if (err) {
+      return next(err);
+    }
+  }); 
+});
 
-// Post (insert) an item
+
+// Post (insert) a note
 router.post('/notes', (req, res, next) => {
   const { title, content } = req.body;
   console.log(title, content, req.body);

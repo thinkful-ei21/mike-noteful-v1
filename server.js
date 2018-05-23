@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const logger = require('morgan');
+const morgan = require('morgan');
 const { PORT } = require('./config');
 const notesRouter = require('./router/notes.router');
 
@@ -9,7 +9,7 @@ const notesRouter = require('./router/notes.router');
 const app = express();
 
 // Log all requests
-app.use(logger('common'));
+app.use(morgan('dev'));
 
 // Create a static webserver
 app.use(express.static('public'));
