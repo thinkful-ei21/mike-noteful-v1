@@ -14,6 +14,9 @@ app.use(logger('common'));
 // Create a static webserver
 app.use(express.static('public'));
 
+// express json middleware
+app.use(express.json());
+
 // use notes router
 app.use('/api', notesRouter);
 
