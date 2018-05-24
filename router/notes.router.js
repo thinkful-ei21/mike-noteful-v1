@@ -18,12 +18,25 @@ router.get('/notes/', (req, res) => {
   // retrieve the searchTerm from the query-string on the req.query object.
   const searchTerm = req.query.searchTerm;
 
-  notes.filter(searchTerm, (err, list) => {
-    if (err) {
-      return next(err); // goes to error handler
-    }
-    res.json(list); // responds with filtered array
-  });
+  notes.filter(searchTerm)
+    .then(searchTerm => {
+      if(searchTerm) {
+        res.json(searchTerm);
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      next(err);
+    });
+    
+    
+  //   , (err, list) => {
+  //   if (err) {
+  //     return next(err); // goes to error handler
+  //   }
+  //   res.json(list); // responds with filtered array
+  // });
 
 });
 
@@ -62,15 +75,29 @@ router.put('/notes/:id', (req, res, next) => {
 // get note by id
 router.get('/notes/:id', (req, res, next) => {
 
-  const foundItem = req.params.id;
+  const item = req.params.id;
 
-  notes.find(foundItem, (err, list) => {
-    if (err) {
-      return next(err); // goes to error handler
-    }
-    res.json(list); // responds with filtered array
-  });
+  notes.find(item)
+    .then(item => {
+      if(item) {
+        res.json(item);
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      next(err);
+    });
+    
+    
+  //   , (err, list) => {
+  //   if (err) {
+  //     return next(err); // goes to error handler
+  //   }
+  //   res.json(list); // responds with filtered array
+  // });
 
+  
 });
 
 // delete a note
