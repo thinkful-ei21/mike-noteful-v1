@@ -30,14 +30,6 @@ router.get('/notes/', (req, res) => {
       next(err);
     });
     
-    
-  //   , (err, list) => {
-  //   if (err) {
-  //     return next(err); // goes to error handler
-  //   }
-  //   res.json(list); // responds with filtered array
-  // });
-
 });
 
 
@@ -60,17 +52,19 @@ router.put('/notes/:id', (req, res, next) => {
     return next(err);
   }
 
-  notes.update(id, updateObj, (err, item) => {
-    if (err) {
-      return next(err);
-    }
-    if (item) {
-      res.json(item);
-    } else {
-      next();
-    }
-  });
+  notes.update(id, updateObj)
+    .then(item => {
+      if(item) {
+        res.json(item);
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      next(err);
+    });
 });
+
 
 // get note by id
 router.get('/notes/:id', (req, res, next) => {
@@ -88,15 +82,6 @@ router.get('/notes/:id', (req, res, next) => {
     .catch(err => {
       next(err);
     });
-    
-    
-  //   , (err, list) => {
-  //   if (err) {
-  //     return next(err); // goes to error handler
-  //   }
-  //   res.json(list); // responds with filtered array
-  // });
-
   
 });
 
@@ -104,16 +89,18 @@ router.get('/notes/:id', (req, res, next) => {
 router.delete('/notes/:id', (req, res, next) => {
   const noteId = req.params.id;
   const message = 'No Content';
-  notes.delete(noteId, (err, item) => {
-    if (item === null) {
-      res.status(404).end();
-    } else {
-      res.status(204).send(message).end();
-    }
-    if (err) {
-      return next(err);
-    }
-  }); 
+  notes.delete(noteId) 
+    .then(item => {
+      if(item === null) {
+        res.status(404).end();
+      } else {
+        res.status(204).send(message).end();
+      }
+      res.json(item);
+    })
+    .catch(err => {
+      next(err)
+    }); 
 });
 
 
@@ -129,16 +116,27 @@ router.post('/notes', (req, res, next) => {
     return next(err);
   }
 
-  notes.create(newItem, (err, item) => {
-    if (err) {
-      return next(err);
-    }
-    if (item) {
-      res.location(`http://${req.headers.host}/notes/${item.id}`).status(201).json(item);
-    } else {
-      next();
-    }
-  });
+  notes.create(newItem)
+    .then(item => {
+      if(item) {
+        res.location(`http://${req.headers.host}/notes/${item.id}`).status(201).json(item);
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      next(err)
+    });
 });
+
+// (err, item) => {
+//   if (err) {
+//     return next(err);
+//   }
+//   if (item) {
+//     res.location(`http://${req.headers.host}/notes/${item.id}`).status(201).json(item);
+//   } else {
+//     next();
+//   }
 
 module.exports = router;
