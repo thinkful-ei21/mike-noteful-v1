@@ -15,12 +15,13 @@ app.use(morgan('dev'));
 app.use(express.static('public'));
 
 // express json middleware
+// parses body content
 app.use(express.json());
 
 // use notes router
 app.use('/api', notesRouter);
 
-// Catch-all 404
+// Catch-all 404 errors
 app.use(function (req, res, next) {
   const err = new Error('Not Found');
   err.status = 404;
