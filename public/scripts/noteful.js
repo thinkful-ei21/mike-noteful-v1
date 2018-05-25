@@ -128,6 +128,8 @@ const noteful = (function () {
             store.currentNote = {};
           }
           render();
+        }).catch(err => {
+          console.error(err);
         });
     });
   }
