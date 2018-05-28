@@ -92,6 +92,29 @@ describe('POST /api/notes', function() {
   });
 });
 
+describe('PUT /api/notes/:id', function() {
+  it('should update valid note', function() {
+    const updateData = {
+      title: '!Not Another Note About Cats!',
+      content: 'Not Another Note About Cats! Not Another Note About Cats! Not Another Note About Cats!'
+    };
+    return chai.request(app)
+      .get('/api/notes')
+      .then(function(res) {
+        updateData.id = res.body[0].id;
+        return chai.request(app)
+          .put(`/api/notes/${updateData.id}`)
+          .send(updateData);
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.deep.equal(updateData);
+      });
+  });
+});
+
 
 describe('Express static', function() {
 
