@@ -113,6 +113,20 @@ describe('PUT /api/notes/:id', function() {
         expect(res.body).to.deep.equal(updateData);
       });
   });
+
+  it('should return an object with a message property "Missing title in request body" when missing "title" field', function() {
+    const updateNote = {name: 'I really need more exciting notes!'};
+    return chai.request(app)
+      .put('/api/notes/1005')
+      .send(updateNote)
+      .catch(err => err.response)
+      .then(res => {
+        expect(res).to.have.status(400);
+        expect(res).to.be.json;
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.equal('Missing `title` in request body');
+      });
+  });
 });
 
 describe('Delete /api/notes/:id', function() {
