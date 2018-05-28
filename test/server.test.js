@@ -75,6 +75,23 @@ describe('GET /api/notes:id', function() {
 });
 
 
+describe('POST /api/notes', function() {
+  it('should post a new note and create a new note object', function() {
+    const newNote = {title:'A Note About Dogs', content:'Quisque facilisis, mi vitae rutrum vestibulum, turpis est suscipit turpis, at'};
+    return chai.request(app)
+      .post('/api/notes')
+      .send(newNote)
+      .then(function(res) {
+        expect(res).to.have.status(201);
+        expect(res).to.be.json;
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.include.keys('id', 'title', 'content');
+        expect(res.body.id).to.not.equal(null);
+        expect(res.body).to.deep.equal(Object.assign(newNote, {id: res.body.id}));
+      });
+  });
+});
+
 
 describe('Express static', function() {
 
