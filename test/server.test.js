@@ -115,6 +115,16 @@ describe('PUT /api/notes/:id', function() {
   });
 });
 
+describe('Delete /api/notes/:id', function() {
+  it('should delete note givin valid id', function() {
+    return chai.request(app)
+      .delete('/api/notes/1002')
+      .then(function(res) {
+        expect(res).to.have.status(204);
+      });
+  });
+});
+
 
 describe('Express static', function() {
 
